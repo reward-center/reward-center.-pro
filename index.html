@@ -27,14 +27,42 @@ body{
     box-shadow:0 0 40px rgba(0,255,255,0.2);
 }
 
+/* IMAGE */
+img{
+    width:100%;
+    border-radius:10px;
+}
+
+/* NEON TEXT */
+.neon{
+    color:#00e5ff;
+    text-shadow:
+    0 0 5px #00e5ff,
+    0 0 10px #00e5ff,
+    0 0 20px #00e5ff,
+    0 0 40px #00e5ff;
+    animation:neonGlow 1.5s infinite alternate;
+}
+@keyframes neonGlow{
+    from{opacity:0.7;}
+    to{opacity:1;}
+}
+
+/* INPUT */
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    margin-top:10px;
+}
+
 /* TIMER */
 #timerBox{
-    margin-bottom:10px;
+    margin-top:10px;
     font-size:14px;
     color:#00ffcc;
 }
-
-/* merah + blink */
 .danger{
     color:#ff3b3b;
 }
@@ -47,26 +75,11 @@ body{
     100%{opacity:1;}
 }
 
-/* IMAGE */
-img{
-    width:100%;
-    border-radius:10px;
-}
-
-/* INPUT */
-input{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:8px;
-    margin-top:10px;
-}
-
 /* BUTTON */
 button{
     width:100%;
     padding:14px;
-    margin-top:15px;
+    margin-top:10px;
     border:none;
     border-radius:10px;
     background:#00e5ff;
@@ -101,15 +114,24 @@ button:hover{
     color:#00e5ff;
 }
 
-.final{
-    display:none;
-}
-
+/* SPEC */
 .spec{
     display:none;
     text-align:left;
     font-size:13px;
     color:#00ffcc;
+}
+.spec p{
+    margin:4px 0;
+    animation:fadeIn 0.5s ease forwards;
+}
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.final{
+    display:none;
 }
 </style>
 </head>
@@ -118,31 +140,33 @@ button:hover{
 
 <div class="container">
 
-<!-- TIMER -->
-<div id="timerBox">
-⏳ Offer expires in <span id="timer">02:30</span>
-</div>
-
-<!-- PROGRESS -->
 <div class="progress">
 <div class="bar" id="bar"></div>
 </div>
 
 <img src="https://www.image2url.com/r2/default/images/1776226871582-a28e549c-c1cf-4692-a072-84383c4c7016.jpg">
 
-<h3>Unlock your reward</h3>
+<h3 class="neon">Unlock your reward</h3>
 
 <input type="text" id="username" placeholder="Enter username">
 
-<button onclick="start()">Scan System</button>
+<!-- TIMER DI ATAS TOMBOL -->
+<div id="timerBox">
+⏳ Offer expires in <span id="timer">02:30</span>
+</div>
+
+<button onclick="start()">Verify Now</button>
 
 <div class="loading" id="loading"></div>
 
+<!-- SPEK PC -->
 <div class="spec" id="specBox">
-<p>✔ CPU: Intel i9</p>
-<p>✔ GPU: RTX 4090</p>
-<p>✔ RAM: 32GB</p>
-<p>✔ SSD: 2TB</p>
+<p>✔ CPU: Intel Core i9-14900K</p>
+<p>✔ GPU: NVIDIA RTX 4090 24GB</p>
+<p>✔ RAM: 32GB DDR5</p>
+<p>✔ Storage: 2TB NVMe SSD</p>
+<p>✔ Cooling: Liquid RGB System</p>
+<p>✔ Power Supply: 1000W Gold</p>
 </div>
 
 <div class="final" id="finalBox">
