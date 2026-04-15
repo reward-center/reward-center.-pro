@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PC Reward</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#050b18;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    width:90%;
+    max-width:380px;
+    background:#0d1629;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 40px rgba(0,255,255,0.2);
+}
+
+/* TIMER */
+#timerBox{
+    margin-bottom:10px;
+    font-size:14px;
+    color:#00ffcc;
+}
+
+/* merah + blink */
+.danger{
+    color:#ff3b3b;
+}
+.blink{
+    animation:blink 1s infinite;
+}
+@keyframes blink{
+    0%{opacity:1;}
+    50%{opacity:0.3;}
+    100%{opacity:1;}
+}
+
+/* IMAGE */
+img{
+    width:100%;
+    border-radius:10px;
+}
+
+/* INPUT */
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    margin-top:10px;
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    background:#00e5ff;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+button:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 20px #00e5ff;
+}
+
+/* PROGRESS */
+.progress{
+    height:8px;
+    background:#222;
+    border-radius:10px;
+    overflow:hidden;
+    margin:10px 0;
+}
+.bar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#00e5ff,#00ff99);
+}
+
+/* LOADING */
+.loading{
+    margin-top:10px;
+    display:none;
+    color:#00e5ff;
+}
+
+.final{
+    display:none;
+}
+
+.spec{
+    display:none;
+    text-align:left;
+    font-size:13px;
+    color:#00ffcc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- TIMER -->
+<div id="timerBox">
+⏳ Offer expires in <span id="timer">02:30</span>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<img src="https://www.image2url.com/r2/default/images/1776226871582-a28e549c-c1cf-4692-a072-84383c4c7016.jpg">
+
+<h3>Unlock your reward</h3>
+
+<input type="text" id="username" placeholder="Enter username">
+
+<button onclick="start()">Scan System</button>
+
+<div class="loading" id="loading"></div>
+
+<div class="spec" id="specBox">
+<p>✔ CPU: Intel i9</p>
+<p>✔ GPU: RTX 4090</p>
+<p>✔ RAM: 32GB</p>
+<p>✔ SSD: 2TB</p>
+</div>
+
+<div class="final" id="finalBox">
+<p>Final verification required</p>
+<button onclick="goCPA()">Complete Now</button>
+</div>
+
+</div>
+
+<!-- SOUND -->
+<audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+<audio id="loadingSound" src="https://www.soundjay.com/misc/sounds/loading-1.mp3"></audio>
+<audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+
+<script>
+
+// SOUND
+function clickSound(){
+    document.getElementById("clickSound").play();
+}
+
+// TIMER
+let time = 150;
+let timerInterval = setInterval(function(){
+    let m = Math.floor(time/60);
+    let s = time%60;
+    if(s<10) s="0"+s;
+
+    document.getElementById("timer").innerHTML = m+":"+s;
+
+    if(time <= 30){
+        document.getElementById("timerBox").classList.add("danger","blink");
+        navigator.vibrate([200,100,200]);
+    }
+
+    if(time <= 0){
+        clearInterval(timerInterval);
+    }
+
+    time--;
+},1000);
+
+// FLOW
+function start(){
+    clickSound();
+
+    let user = document.getElementById("username").value;
+    if(user==""){
+        alert("Enter username!");
+        return;
+    }
+
+    let load = document.getElementById("loading");
+    let bar = document.getElementById("bar");
+
+    load.style.display="block";
+    document.getElementById("loadingSound").play();
+
+    load.innerHTML="Scanning system...";
+    bar.style.width="25%";
+
+    setTimeout(()=>{
+        load.innerHTML="Checking database...";
+        bar.style.width="50%";
+    },2000);
+
+    setTimeout(()=>{
+        load.innerHTML="Matching reward...";
+        bar.style.width="75%";
+        document.getElementById("specBox").style.display="block";
+    },4000);
+
+    setTimeout(()=>{
+        load.innerHTML="Generating access...";
+        bar.style.width="100%";
+    },6000);
+
+    setTimeout(()=>{
+        document.getElementById("loadingSound").pause();
+        document.getElementById("successSound").play();
+
+        load.innerHTML="Reward ready!";
+        document.getElementById("finalBox").style.display="block";
+    },8000);
+}
+
+// FINAL
+function goCPA(){
+    clickSound();
+    window.open("https://appchecker.space/cl/i/271x3k","_blank");
+}
+
+</script>
+
+</body>
+</html>
